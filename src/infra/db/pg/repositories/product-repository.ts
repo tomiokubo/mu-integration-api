@@ -30,7 +30,7 @@ export class ProductRepository
   async listByManyCodes(codes: string[]): Promise<Product[]> {
     const products = await DbHelper.getAppDataSource()?.manager.query(
       "SELECT P.codpro as reference, ref.referencia as eanCode, C.descricaolonga as description, P.unid1 as unit, " +
-        "P.modelo as supplier, C.vendaminima as packageAmount, P.pesounit as weight, " +
+        "P.modelo as supplier, P.faconv as conversionFactor, P.unid1 as conversionUnit, C.vendaminima as packageAmount, P.pesounit as weight, " +
         "C.alturacm as height, C.larguracm as width, C.comprimentocm as length, P.codigoncm as ncm, I.controlelote as batchControl " +
         "FROM produtocad P " +
         "INNER JOIN complementoproduto C " +

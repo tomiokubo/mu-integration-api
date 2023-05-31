@@ -14,11 +14,9 @@ export class ListProductsByManyCodesController implements Controller {
   ) {}
   async handle(request: { codes: string[] }): Promise<HttpResponse> {
     const error = this.validation.validate(request);
-    console.log(error);
     if (error) return badRequest(error);
     try {
       const products = await this.listProducts.list(request.codes);
-      if (products.length === 0) return noContent();
       return ok(products);
     } catch (error) {
       return serverError(error);

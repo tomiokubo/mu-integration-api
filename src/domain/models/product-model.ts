@@ -12,4 +12,6 @@ export interface Product {
   length: number;
   ncm: string;
   batchControl: boolean;
+  conversionUnit: string;
+  conversionFactor: number;
 }
