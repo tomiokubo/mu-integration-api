@@ -6,8 +6,5 @@ import {
 
 export const makeListProductsValidation = (): ValidationComposite => {
   const validations: Validation[] = [];
-  for (const field of ["code"]) {
-    validations.push(new RequiredFieldValidation(field));
-  }
   return new ValidationComposite(validations);
 };

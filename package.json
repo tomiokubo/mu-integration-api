@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "typeorm": "typeorm-ts-node-esm",
+    "build": "tsc && tsc-alias",
     "dev": "ts-node-dev --respawn -r tsconfig-paths/register src/server.ts",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -29,6 +30,7 @@
     "supertest": "^6.3.3",
     "ts-jest": "^29.0.5",
     "ts-node-dev": "^2.0.0",
+    "tsc-alias": "^1.8.7",
     "tsconfig-paths": "^4.1.2",
     "typescript": "^4.9.5"
   },
