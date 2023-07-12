@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const express_route_adapter_1 = require("../adapters/express-route-adapter");
+const list_products_by_many_codescontroller_factory_1 = require("../factories/controllers/list-products-by-many-codescontroller-factory");
+const list_products_controller_factory_1 = require("../factories/controllers/list-products-controller-factory");
+const router = (0, express_1.Router)();
+router.get("/", (0, express_route_adapter_1.adaptRoute)((0, list_products_controller_factory_1.makeListProductsController)()));
+router.get("/many", (0, express_route_adapter_1.adaptRoute)((0, list_products_by_many_codescontroller_factory_1.makeListProductsByManyCodesController)()));
+exports.default = router;
