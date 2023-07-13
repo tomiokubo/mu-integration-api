@@ -14,7 +14,8 @@ const db_helper_1 = require("./infra/db/pg/db-helper");
 const app_1 = require("./main/config/app");
 db_helper_1.DbHelper.makeAppDataSource();
 const AppDataSource = db_helper_1.DbHelper.getAppDataSource();
+const port = process.env.PORT || 3002;
 AppDataSource === null || AppDataSource === void 0 ? void 0 : AppDataSource.initialize().then(() => __awaiter(void 0, void 0, void 0, function* () {
     const app = yield (0, app_1.setupApp)();
-    app.listen(3002, () => console.log("Server running"));
+    app.listen(port, () => console.log(`Server running on port ${port}`));
 })).catch((error) => console.log(error));
