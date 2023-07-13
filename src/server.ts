@@ -6,9 +6,11 @@ DbHelper.makeAppDataSource();
 
 const AppDataSource = DbHelper.getAppDataSource();
 
+const port = process.env.PORT || 3002;
+
 AppDataSource?.initialize()
   .then(async () => {
     const app = await setupApp();
-    app.listen(3002, () => console.log("Server running"));
+    app.listen(port, () => console.log(`Server running on port ${port}`));
   })
   .catch((error) => console.log(error));
