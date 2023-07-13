@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 const db_helper_1 = require("./infra/db/pg/db-helper");
 const app_1 = require("./main/config/app");
+require("dotenv").config();
 db_helper_1.DbHelper.makeAppDataSource();
 const AppDataSource = db_helper_1.DbHelper.getAppDataSource();
 const port = process.env.PORT;

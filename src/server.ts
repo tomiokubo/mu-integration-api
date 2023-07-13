@@ -2,6 +2,8 @@ import "reflect-metadata";
 import { DbHelper } from "./infra/db/pg/db-helper";
 import { setupApp } from "./main/config/app";
 
+require("dotenv").config();
+
 DbHelper.makeAppDataSource();
 
 const AppDataSource = DbHelper.getAppDataSource();
