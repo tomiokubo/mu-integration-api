@@ -13,7 +13,6 @@ export class ListProductsController implements Controller {
   ) {}
   async handle(request?: ListProductsFilterOptions): Promise<HttpResponse> {
     const error = this.validation.validate(request);
-    console.log(error);
     if (error) return badRequest(error);
     try {
       const products = await this.listProducts.list(request);

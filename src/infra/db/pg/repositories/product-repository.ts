@@ -10,10 +10,6 @@ export class ProductRepository
   async list(
     filterOptions?: ListProductsFilterOptions | undefined
   ): Promise<Product[]> {
-    const containsFilter =
-      filterOptions?.code ||
-      filterOptions?.description ||
-      filterOptions?.reference;
     const products = await DbHelper.getAppDataSource()?.manager.query(
       "SELECT P.codpro as reference, ref.referencia as eanCode, C.descricaolonga as description, P.unid1 as unit, " +
         "P.modelo as supplier, C.vendaminima as packageAmount, P.pesounit as weight, " +
@@ -23,7 +19,7 @@ export class ProductRepository
         "ON P.codpro = C.codpro " +
         "INNER JOIN itemfilest I " +
         "ON P.codpro = I.codpro " +
-        "INNER JOIN PRODREFCAD ref " +
+        "LEFT JOIN PRODREFCAD ref " +
         "ON P.codpro = ref.codpro " +
         "WHERE I.filial = 2 " +
         `${filterOptions?.code ? "AND ref.referencia = @0 " : ""}` +
