@@ -14,4 +14,6 @@ export interface Product {
   batchControl: boolean;
   conversionUnit: string;
   conversionFactor: number;
+  branch: string;
+  amount: number;
 }

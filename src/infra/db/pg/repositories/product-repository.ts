@@ -58,4 +58,67 @@ export class ProductRepository
     );
     return products;
   }
+
+  async getInventoryByCodes(
+    codes: string[],
+    branch?: string[]
+  ): Promise<Product[]> {
+    if (!codes || codes.length === 0) {
+      const products = await DbHelper.getAppDataSource()?.manager.query(
+        `SELECT
+        I.FILIAL as branch
+        ,A.CODPRO as reference
+        ,REF.referencia as eanCode
+        ,A.MODELO as supplier
+        ,B.DESCRICAOLONGA as description
+        ,A.UNID1 as unit
+        ,I.QUANT as amount
+        
+      FROM
+        PRODUTOCAD A
+        INNER JOIN ITEMFILEST I ON (I.CODPRO=A.CODPRO) 
+        INNER JOIN COMPLEMENTOPRODUTO B ON (B.CODPRO=A.CODPRO)
+        INNER JOIN PRODREFCAD REF ON A.CODPRO = REF.CODPRO
+        WHERE I.QUANT <> 0
+        ${
+          branch &&
+          `AND I.FILIAL IN (${branch.map((code) => {
+            return `'${code}'`;
+          })})`
+        }
+        `
+      );
+      return products;
+    }
+    const products = await DbHelper.getAppDataSource()?.manager.query(
+      `SELECT
+      I.FILIAL as branch
+      ,A.CODPRO as reference
+      ,REF.referencia as eanCode
+      ,A.MODELO as supplier
+      ,B.DESCRICAOLONGA as description
+      ,A.UNID1 as unit
+      ,I.QUANT as amount
+      
+    FROM
+      PRODUTOCAD A
+      INNER JOIN ITEMFILEST I ON (I.CODPRO=A.CODPRO) 
+      INNER JOIN COMPLEMENTOPRODUTO B ON (B.CODPRO=A.CODPRO)
+      INNER JOIN PRODREFCAD REF ON A.CODPRO = REF.CODPRO
+      WHERE REF.referencia IN (${codes.map((code) => {
+        return `'${code}'`;
+      })})
+      ${
+        branch && branch.length > 0
+          ? "AND I.FILIAL IN (" +
+            branch.map((item) => {
+              return `'${item}'`;
+            }) +
+            ")"
+          : ""
+      }
+      `
+    );
+    return products;
+  }
 }
