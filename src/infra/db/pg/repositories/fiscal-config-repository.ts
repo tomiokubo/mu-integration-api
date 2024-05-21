@@ -2,11 +2,13 @@ import { LoadFiscalConfigRepository } from "@/data/protocols/db/fiscal-config/lo
 import { FiscalConfig } from "@/domain/models/fiscal-config";
 import { DbHelper } from "../db-helper";
 import { StateFiscalConfig } from "@/domain/models/state-fiscal-config";
+import { IpiConfig } from "@/domain/models/ipi-config";
 
 export class FiscalConfigRepository implements LoadFiscalConfigRepository {
   async load(): Promise<{
     fiscalConfig: FiscalConfig[];
     stateFiscalConfig: StateFiscalConfig[];
+    ipiConfig: IpiConfig[];
   }> {
     const fiscalConfig = await DbHelper.getAppDataSource()?.manager.query(
       `SELECT DISTINCT
@@ -31,6 +33,13 @@ export class FiscalConfigRepository implements LoadFiscalConfigRepository {
       ,ncoicm3mer AS aliquotaICMSParaNorteNordesteEEspiritoSanto
        FROM ESTADOSCAD`
     );
-    return { fiscalConfig, stateFiscalConfig };
+
+    const ipiConfig = await DbHelper.getAppDataSource()?.manager.query(
+      `SELECT DISTINCT 
+      clasfiscal AS ncm
+      , percipi AS ipi
+      FROM CLAFISCCAD`
+    );
+    return { fiscalConfig, stateFiscalConfig, ipiConfig };
   }
 }
