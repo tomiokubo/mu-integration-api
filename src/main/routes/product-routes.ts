@@ -7,7 +7,7 @@ import { makeGetInventoryByCodesController } from "../factories/controllers/get-
 const router = Router();
 
 router.get("/", adaptRoute(makeListProductsController()));
-router.get("/many", adaptRoute(makeListProductsByManyCodesController()));
+router.post("/many", adaptRoute(makeListProductsByManyCodesController()));
 router.get("/inventory", adaptRoute(makeGetInventoryByCodesController()));
 
 export default router;

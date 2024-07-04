@@ -1,5 +1,5 @@
 import { ListProductsByManyCodes } from "@/domain/usecases/list-products-by-many-codes";
-import { badRequest, noContent, ok, serverError } from "../helpers";
+import { badRequest, ok, serverError } from "../helpers";
 import { Controller, HttpResponse } from "../protocols";
 import { Validation } from "../protocols/validation";
 
@@ -9,8 +9,8 @@ export class ListProductsByManyCodesController implements Controller {
     private readonly listProducts: ListProductsByManyCodes
   ) { }
   async handle(request: { codes: string[] }): Promise<HttpResponse> {
-    // const error = this.validation.validate(request);
-    // if (error) return badRequest(error);
+    const error = this.validation.validate(request);
+    if (error) return badRequest(error);
     try {
       const products = await this.listProducts.list(request.codes);
       return ok(products);
