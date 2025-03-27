@@ -9,5 +9,6 @@ const router = Router();
 router.get("/", adaptRoute(makeListProductsController()));
 router.post("/many", adaptRoute(makeListProductsByManyCodesController()));
 router.get("/inventory", adaptRoute(makeGetInventoryByCodesController()));
+router.post("/inventory", adaptRoute(makeGetInventoryByCodesController()));
 
 export default router;

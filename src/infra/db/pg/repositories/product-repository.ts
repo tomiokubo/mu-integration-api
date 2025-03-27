@@ -40,7 +40,7 @@ export class ProductRepository
 
   async listByManyCodes(codes: string[]): Promise<Product[]> {
     const products = await DbHelper.getAppDataSource()?.manager.query(
-      "SELECT P.codpro as reference, ref.referencia as eanCode, C.descricaolonga as description, P.unid1 as unit, " +
+      "SELECT P.codpro as reference, ref.referencia as eanCode, C.descricaolonga as description, P.unid1 as unit, P.unid2 as unit2, " +
         "P.modelo as supplier, P.faconv as conversionFactor, P.unid1 as conversionUnit, C.vendaminima as packageAmount, P.pesounit as weight, " +
         "C.alturacm as height, C.larguracm as width, C.comprimentocm as length, P.codigoncm as ncm, I.controlelote as batchControl " +
         "FROM produtocad P " +
@@ -73,6 +73,7 @@ export class ProductRepository
         ,B.DESCRICAOLONGA as description
         ,A.UNID1 as unit
         ,I.QUANT as amount
+        ,B.VENDAMINIMA as packageAmount
         
       FROM
         PRODUTOCAD A
@@ -81,10 +82,11 @@ export class ProductRepository
         INNER JOIN PRODREFCAD REF ON A.CODPRO = REF.CODPRO
         WHERE I.QUANT <> 0
         ${
-          branch &&
-          `AND I.FILIAL IN (${branch.map((code) => {
-            return `'${code}'`;
-          })})`
+          branch
+            ? `AND I.FILIAL IN (${branch.map((code) => {
+                return `'${code}'`;
+              })})`
+            : ""
         }
         `
       );
